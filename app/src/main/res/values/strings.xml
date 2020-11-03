@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Collection</string>
     <string name="main_pic_particles_split">图片粒子爆炸效果</string>
+    <string name="main_pic_loading">图片加载动画水波纹</string>
 </resources>

@@ -6,12 +6,14 @@ import android.view.View;
 
 import butterknife.OnClick;
 import cn.ltt.projectcollection.base.BaseActivity;
+import cn.ltt.projectcollection.picloading.PictureLoadingActivity;
 import cn.ltt.projectcollection.picparticlessplit.PicParticlesSplitActivity;
 
 public class MainActivity extends BaseActivity {
 
     private SparseArray<Class<? extends BaseActivity>> mActivityArray = new SparseArray<Class<? extends BaseActivity>>() {
         {
+            put(R.id.btnPicLoading, PictureLoadingActivity.class);
             put(R.id.btnPicParticlesSplit, PicParticlesSplitActivity.class);
         }
     };
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btnPicParticlesSplit})
+    @OnClick({R.id.btnPicParticlesSplit, R.id.btnPicLoading})
     public void onClick(View v) {
         startActivity(new Intent(mActivity, mActivityArray.get(v.getId())));
     }
