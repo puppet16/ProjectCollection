@@ -20,5 +20,9 @@
             android:id="@+id/btnPicLoading"
             style="@style/ButtonStyle"
             android:text="@string/main_pic_loading" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBezierCurve"
+            style="@style/ButtonStyle"
+            android:text="@string/main_bezier_curve" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
