@@ -7,6 +7,7 @@ import android.view.View;
 import butterknife.OnClick;
 import cn.ltt.projectcollection.base.BaseActivity;
 import cn.ltt.projectcollection.beziercurve.BezierCurveActivity;
+import cn.ltt.projectcollection.dragbubble.DragBubbleActivity;
 import cn.ltt.projectcollection.picloading.PictureLoadingActivity;
 import cn.ltt.projectcollection.picparticlessplit.PicParticlesSplitActivity;
 
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity {
             put(R.id.btnPicLoading, PictureLoadingActivity.class);
             put(R.id.btnPicParticlesSplit, PicParticlesSplitActivity.class);
             put(R.id.btnBezierCurve, BezierCurveActivity.class);
+            put(R.id.btnDragBubble, DragBubbleActivity.class);
         }
     };
 
@@ -30,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btnPicParticlesSplit, R.id.btnPicLoading, R.id.btnBezierCurve})
+    @OnClick({R.id.btnPicParticlesSplit, R.id.btnPicLoading, R.id.btnBezierCurve, R.id.btnDragBubble})
     public void onClick(View v) {
         startActivity(new Intent(mActivity, mActivityArray.get(v.getId())));
     }

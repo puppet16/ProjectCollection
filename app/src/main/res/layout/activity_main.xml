@@ -24,5 +24,9 @@
             android:id="@+id/btnBezierCurve"
             style="@style/ButtonStyle"
             android:text="@string/main_bezier_curve" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDragBubble"
+            style="@style/ButtonStyle"
+            android:text="@string/main_drag_bubble" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

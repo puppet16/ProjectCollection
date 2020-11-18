@@ -29,6 +29,7 @@
         <activity android:name=".picloading.PictureLoadingActivity" />
         <activity android:name=".picparticlessplit.PicParticlesSplitActivity" />
         <activity android:name=".beziercurve.BezierCurveActivity" />
+        <activity android:name=".dragbubble.DragBubbleActivity"/>
     </application>
 
 </manifest>
