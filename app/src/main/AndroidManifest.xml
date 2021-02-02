@@ -30,6 +30,7 @@
         <activity android:name=".picparticlessplit.PicParticlesSplitActivity" />
         <activity android:name=".beziercurve.BezierCurveActivity" />
         <activity android:name=".dragbubble.DragBubbleActivity"/>
+        <activity android:name=".deeplink.DeepLinkActivity"/>
     </application>
 
 </manifest>

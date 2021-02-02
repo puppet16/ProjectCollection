@@ -18,11 +18,12 @@ import butterknife.Unbinder;
  **/
 public abstract class BaseActivity extends AppCompatActivity {
     protected BaseActivity mActivity;
-    private final String TAG = getClass().getSimpleName();
+    public final String TAG = getClass().getSimpleName();
     protected Unbinder mBinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().getDecorView();
         super.onCreate(savedInstanceState);
         mActivity = this;
         setContentView(getLayoutId());

@@ -28,5 +28,13 @@
             android:id="@+id/btnDragBubble"
             style="@style/ButtonStyle"
             android:text="@string/main_drag_bubble" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEnterXdf"
+            style="@style/ButtonStyle"
+            android:text="@string/main_enter_xdf" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEnterKotlin"
+            style="@style/ButtonStyle"
+            android:text="@string/main_enter_kotlin" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

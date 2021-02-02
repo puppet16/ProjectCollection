@@ -4,5 +4,7 @@
     <string name="main_pic_loading">图片加载动画水波纹</string>
     <string name="main_bezier_curve">贝塞尔曲线</string>
     <string name="main_drag_bubble">仿QQ可拖拽消息气泡</string>
+    <string name="main_enter_xdf">跳转xdfApp</string>
+    <string name="main_enter_kotlin">跳转Kotlin</string>
 
 </resources>

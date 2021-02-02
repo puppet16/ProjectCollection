@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:onClick="searchApp"
+        style="@style/ButtonStyle"
+        android:text="search_app" />
+
+    <Button
+        android:onClick="showAppDetails"
+        style="@style/ButtonStyle"
+        android:text="show_app_details" />
+
+    <Button
+        android:onClick="installAppDetails"
+        style="@style/ButtonStyle"
+        android:text="install_app_details" />
+
+    <Button
+        android:onClick="marketSearch"
+        style="@style/ButtonStyle"
+        android:text="market_search" />
+
+    <Button
+        android:onClick="marketDetails"
+        style="@style/ButtonStyle"
+        android:text="market_details" />
+
+    <Button
+        android:onClick="courseDetails"
+        style="@style/ButtonStyle"
+        android:text="course_details" />
+    <Button
+        android:onClick="webViewClick"
+        style="@style/ButtonStyle"
+        android:text="Web" />
+</LinearLayout>
