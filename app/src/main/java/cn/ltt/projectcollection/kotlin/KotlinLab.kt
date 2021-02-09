@@ -1,6 +1,6 @@
 package cn.ltt.projectcollection.kotlin
 
-import java.io.File
+import java.util.*
 
 /**
  * ============================================================
@@ -292,101 +292,317 @@ import java.io.File
 
 //region + html DSL
 
+//fun main() {
+//    val htmlContent = html {
+//        head {
+//            "meta" { "charset"("UTF-8") }
+//        }
+//        body {
+//            "div" {
+//                "style"(
+//                        """
+//                    width: 200px;
+//                    height: 200px;
+//                    line-height: 200px;
+//                    background-color: #C9394A;
+//                    text-align: center
+//                    """.trimIndent()
+//                )
+//                "span" {
+//                    "style"(
+//                            """
+//                        color: white;
+//                        font-family: Microsoft YaHei
+//                        """.trimIndent()
+//                    )
+//                    +"Hello HTML DSL!!"
+//                }
+//            }
+//        }
+//    }.render()
+//
+//    File("Kotlin_html_DSL.html").writeText(htmlContent)
+//}
+//
+//interface Node {
+//    fun render(): String
+//}
+//
+//class StringNode(val content: String) : Node {
+//    override fun render(): String {
+//        return content
+//    }
+//}
+//
+////节点类
+//class BlockNode(val name: String) : Node {
+//    //节点的子节点
+//    val children = ArrayList<Node>()
+//
+//    //节点的属性
+//    val properties = HashMap<String, Any>()
+//
+//    override fun render(): String {
+//        //<html props>XXX</html>
+//        return """
+//            <$name ${properties.map { "${it.key}='${it.value}'" }.joinToString(" ")}>
+//                ${children.joinToString(""){it.render()}}
+//            </$name>
+//        """.trimIndent()
+//    }
+//
+//    //因为这个函数需要两个receiver:String,和BlockNode，将其定义到BlockNode类里就自动有了该receiver
+//    operator fun String.invoke(block: BlockNode.() -> Unit): BlockNode {
+//        val node = BlockNode(this)
+//        node.block()
+//        this@BlockNode.children += node
+//        return node
+//    }
+//
+//    operator fun String.invoke(value: Any) {
+//        this@BlockNode.properties[this] = value
+//    }
+//
+//    operator fun String.unaryPlus() {
+//        this@BlockNode.children += StringNode(this)
+//    }
+//}
+//
+//fun html(block: BlockNode.() -> Unit): BlockNode {
+//    val html = BlockNode("html")
+//    html.block()
+//    return html
+//}
+//
+////为顶级函数head添加一个receiver,使之成为扩展函数
+//fun BlockNode.head(block: BlockNode.() -> Unit): BlockNode {
+//    val head = BlockNode("head")
+//    head.block()
+//    this.children += head
+//    return head
+//}
+//
+//fun BlockNode.body(block: BlockNode.() -> Unit): BlockNode {
+//    val body = BlockNode("body")
+//    body.block()
+//    this.children += body
+//    return body
+//}
+
+
+//endregion
+
+//region + 构造器基本写法
+
+//
+//abstract class Animal(var name: String) {
+//}
+//
+//fun main() {
+//    val person = Person(name = "Lee")
+//    val str = String()
+//    val str1 = String(charArrayOf('1','2'))
+//}
+//fun String(ints: IntArray): String {
+//    return ints.contentToString()
+//}
+//
+//class Person  constructor(var age: Int = 18,name: String){
+//    constructor():this(20, "unknown")
+//}
+//
+
+//endregion
+
+//region + 属性的延迟初始化
+
+//private lateinit var person: Person
+//
+//fun main() {
+//    println(::person.isInitialized)
+//    person = Person("Lee", 18)
+//    println(::person.isInitialized)
+//
+//}
+// class Person(var name: String, private var age:Int)
+
+//private val mTvName by lazy {
+//    findViewById<TextView>(R.id.tv_name)
+//}
+//endregion
+
+//region + 接口代理
+
+//fun main() {
+//
+//}
+//interface TextWatcher {
+//
+//    fun beforeTextChanged()
+//
+//    fun onTextChanged()
+//
+//    fun afterTextChanged();
+//}
+//
+//class TextWatcherImpl : TextWatcher {
+//    override fun beforeTextChanged() {
+//        println("beforeTextChanged")
+//    }
+//
+//    override fun onTextChanged() {
+//        println("onTextChanged")
+//    }
+//
+//    override fun afterTextChanged() {
+//        println("afterTextChanged")
+//    }
+//}
+//
+//class TextWatcherImplWrapper(val watcher: TextWatcher) : TextWatcher by watcher {
+//
+//    override fun afterTextChanged() {
+//        watcher.afterTextChanged()
+//        println("wrapper")
+//    }
+//}
+
+//endregion
+
+//region + 属性代理
+
+//class Person(var name: String) {
+//    //代理getter
+//    val firstName by lazy { name.split(" ")[0] }
+//    var secondName: String by Delegates.observable(name.split(" ")[1]) { property, oldValue, newValue ->
+//        println("value changed from $oldValue -> $newValue")
+//    }
+//}
+//
+//fun main() {
+//    val person = Person("Bruce Lee")
+//    person.secondName = "Jones"
+//
+//    println("Person:{name=${person.name},firstName=${person.firstName},secondName=${person.secondName}")
+//    person.name = "Jon Smith"
+//    println("Person:{name=${person.name},firstName=${person.firstName},secondName=${person.secondName}")
+//}
+
+
+//endregion
+
+//region + 自定义属性代理
+
+//fun main() {
+//    var str:String by ProxyX("321")
+//    println(str)
+//    str = "123"
+//    println(str)
+//}
+//
+//class ProxyX(private var initialValue: String) {
+//    private var value = initialValue
+//
+//    operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+//        return "$value-Proxy"
+//    }
+//
+//    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+//        this.value = this.value + value
+//    }
+//}
+//endregion
+
+//region + 自定义属性代理读取Config.properties
+
+//class PropertiesDelegate(private val path: String, private val defaultValue: String = "") {
+//    private lateinit var url: URL
+//
+//    private val properties: Properties by lazy {
+//        val prop = Properties()
+//        url = try {
+//            javaClass.getResourceAsStream(path).use {
+//                prop.load(it)
+//            }
+//            javaClass.getResource(path)!!
+//        } catch (e: Exception) {
+//            try {
+//                ClassLoader.getSystemClassLoader().getResourceAsStream(path).use {
+//                    prop.load(it)
+//                }
+//                ClassLoader.getSystemClassLoader().getResource(path)!!
+//            } catch (e: Exception) {
+//                FileInputStream(path).use {
+//                    prop.load(it)
+//                }
+//                URL("file://${File(path).canonicalPath}")
+//            }
+//        }
+//        prop
+//    }
+//
+//    operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+//        return properties.getProperty(property.name, defaultValue)
+//    }
+//
+//    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+//        properties.setProperty(property.name, value)
+//        File(url.toURI()).outputStream().use {
+//            properties.store(it, "Hello")
+//        }
+//    }
+//}
+//
+//abstract class AbsProperties(path: String) {
+//    protected val prop = PropertiesDelegate(path)
+//}
+//
+//class Config: AbsProperties("Config.properties") {
+//    var author by prop
+//    var version by prop
+//    var desc by prop
+//}
+//
+//fun main() {
+//    val config = Config()
+//    println(config.author)
+//    println(config.version)
+//    config.version = "1.1.0"
+//    println(config.desc)
+//    println(config.version)
+//}
+
+//endregion
+
+//region + 单例
+
+//object Singleton {
+//    @JvmField var value: Int = 26
+//    init {
+//        value *= 2
+//    }
+//}
+//
+//fun main() {
+//    println("value${Singleton.value}")
+//}
+
+//endregion
+
+//region + 内部类
+
+class Outer {
+    inner class Inner
+    class StaticInner
+}
+
 fun main() {
-    val htmlContent = html {
-        head {
-            "meta" { "charset"("UTF-8") }
-        }
-        body {
-            "div" {
-                "style"(
-                        """
-                    width: 200px; 
-                    height: 200px; 
-                    line-height: 200px; 
-                    background-color: #C9394A;
-                    text-align: center
-                    """.trimIndent()
-                )
-                "span" {
-                    "style"(
-                            """
-                        color: white;
-                        font-family: Microsoft YaHei
-                        """.trimIndent()
-                    )
-                    +"Hello HTML DSL!!"
-                }
-            }
-        }
-    }.render()
-
-    File("Kotlin_html_DSL.html").writeText(htmlContent)
+    val inner = Outer().Inner()
+    val innerObject = OuterObject.InnerObject
 }
 
-interface Node {
-    fun render(): String
-}
-
-class StringNode(val content: String) : Node {
-    override fun render(): String {
-        return content
-    }
-}
-
-//节点类
-class BlockNode(val name: String) : Node {
-    //节点的子节点
-    val children = ArrayList<Node>()
-
-    //节点的属性
-    val properties = HashMap<String, Any>()
-
-    override fun render(): String {
-        //<html props>XXX</html>
-        return """
-            <$name ${properties.map { "${it.key}='${it.value}'" }.joinToString(" ")}>
-                ${children.joinToString(""){it.render()}}
-            </$name>
-        """.trimIndent()
-    }
-
-    //因为这个函数需要两个receiver:String,和BlockNode，将其定义到BlockNode类里就自动有了该receiver
-    operator fun String.invoke(block: BlockNode.() -> Unit): BlockNode {
-        val node = BlockNode(this)
-        node.block()
-        this@BlockNode.children += node
-        return node
-    }
-
-    operator fun String.invoke(value: Any) {
-        this@BlockNode.properties[this] = value
-    }
-
-    operator fun String.unaryPlus() {
-        this@BlockNode.children += StringNode(this)
-    }
-}
-
-fun html(block: BlockNode.() -> Unit): BlockNode {
-    val html = BlockNode("html")
-    html.block()
-    return html
-}
-
-//为顶级函数head添加一个receiver,使之成为扩展函数
-fun BlockNode.head(block: BlockNode.() -> Unit): BlockNode {
-    val head = BlockNode("head")
-    head.block()
-    this.children += head
-    return head
-}
-
-fun BlockNode.body(block: BlockNode.() -> Unit): BlockNode {
-    val body = BlockNode("body")
-    body.block()
-    this.children += body
-    return body
+object OuterObject {
+    object InnerObject
 }
 
 
