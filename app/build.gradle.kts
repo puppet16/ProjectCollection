@@ -3,7 +3,24 @@ import org.jetbrains.kotlin.config.KotlinCompilerVersion
 plugins {
     id ("com.android.application")
     id ("kotlin-android")
+    id ("org.jetbrains.kotlin.plugin.allopen") version "1.4.21"
+    id ("org.jetbrains.kotlin.plugin.noarg") version "1.4.21"
+    kotlin("kapt")
+
+//    kotlin("jvm") version "1.4.30" // or kotlin("multiplatform") or any other kotlin plugin
+    kotlin("plugin.serialization") version "1.4.30"
 }
+
+noArg {
+    invokeInitializers = true
+    annotations("cn.ltt.projectcollection.kotlin.DataClassAnnotation")
+}
+
+allOpen {
+    annotations("cn.ltt.projectcollection.kotlin.DataClassAnnotation")
+}
+
+
 
 android {
     compileSdkVersion(30)
@@ -50,7 +67,17 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
+
+
     implementation("com.google.code.gson:gson:2.8.1")
+
+    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation( "com.squareup.moshi:moshi-kotlin:1.11.0") // for KotlinJsonAdapterFactory
+    kapt( "com.squareup.moshi:moshi-kotlin-codegen:1.11.0") // for generated Json Adapter
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+//    implementation( "org.jetbrains.kotlin:kotlin-reflect")
+
 }
 repositories {
     mavenCentral()

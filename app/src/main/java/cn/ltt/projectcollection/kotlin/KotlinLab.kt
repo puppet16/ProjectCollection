@@ -1,6 +1,6 @@
 package cn.ltt.projectcollection.kotlin
 
-import java.util.*
+import kotlin.reflect.jvm.internal.impl.descriptors.annotations.KotlinRetention
 
 /**
  * ============================================================
@@ -9,6 +9,8 @@ import java.util.*
  * desc    描述
  * ============================================================
  **/
+
+//region + 之前的代码
 
 //region + 统计取斐波那契数列前11位所需时间
 //fun main() {
@@ -591,19 +593,447 @@ import java.util.*
 
 //region + 内部类
 
-class Outer {
-    inner class Inner
-    class StaticInner
-}
-
-fun main() {
-    val inner = Outer().Inner()
-    val innerObject = OuterObject.InnerObject
-}
-
-object OuterObject {
-    object InnerObject
-}
+//class Outer {
+//    inner class Inner
+//    class StaticInner
+//}
+//
+//fun main() {
+//    val inner = Outer().Inner()
+//    val innerObject = OuterObject.InnerObject
+//    val btn: Button = Button(context)
+//    btn.post { object: Runnable, Closeable {
+//        override fun run() {
+//            TODO("Not yet implemented")
+//        }
+//
+//        override fun close() {
+//
+//        }
+//
+//    }}
+//
+//}
+//
+//object OuterObject {
+//    object InnerObject
+//}
+//
 
 
 //endregion
+
+//region + 数据类
+//
+//class Person(var name: String, var age: Int)
+//
+//@DataClassAnnotation
+//data class Computer(val id: Long, val name: String, val brand:Person) {
+//    init{
+//        println(name)
+//    }
+//}
+//
+//fun main() {
+////    val computer = Computer(31L, "mackBook Pro", Person("Apple", 45))
+//    val computer = Computer::class.java.newInstance()
+//}
+//
+
+
+//endregion
+
+//region + 枚举
+
+//enum class State : Runnable {
+//    START {
+//        override fun run() {
+//            println("For START")
+//        }
+//    },
+//    FINISHED {
+//        override fun run() {
+//            println("For FINISHED")
+//        }
+//    }
+//}
+//
+//enum class Status {
+//    NEW, RUNNABLE, RUNNING, BLOCKED, DEAD
+//}
+//
+//fun State.next(): State {
+//    return State.values().let(fun(it: Array<State>): State {
+//        val nextOrdinal = (ordinal + 1) % it.size
+//        return it[nextOrdinal]
+//    })
+//}
+//
+//fun main() {
+////    println(State.START.name)
+////    println(State.START.ordinal)
+////    println(State.FINISHED.name)
+////    println(State.FINISHED.ordinal)
+////    println(State.values().contentToString())
+////
+////    val state = State.START
+////    val value = when(state) {
+////        State.START -> {0}
+////        State.FINISHED -> {1}
+////    }
+////    if (state <= State.FINISHED) {
+////        println("yes")
+////    }
+//
+//    val statusRange = Status.NEW .. Status.BLOCKED
+//
+//    val status = Status.RUNNING
+//
+//    println(status in statusRange)
+//
+//
+//}
+
+//endregion
+
+//region + 密封
+
+//fun main() {
+//   val player = Player()
+//    player.play("The Nights")
+//}
+//sealed class PlayerState
+//
+//object Idle : PlayerState()
+//
+//class Playing(val song: String): PlayerState() {
+//    fun start(){}
+//    fun stop(){}
+//}
+//
+//class Error(val errorInfo: String):PlayerState() {
+//    fun recover() {}
+//}
+//
+//class Player {
+//    var state: PlayerState = Idle
+//
+//    fun play(song: String) {
+//        this.state = when(val state = this.state) {
+//            Idle -> {
+//                Playing(song).also(Playing::start)
+//            }
+//            is Playing -> {
+//                state.stop()
+//                Playing(song).also(Playing::start)
+//            }
+//            is Error -> {
+//                state.recover()
+//                Playing(song).also(Playing::start)
+//            }
+//        }
+//    }
+//
+//}
+
+//endregion
+
+
+//region + 内联类
+
+//inline class BoxInt(val value: Int) : Comparable<Int> {
+//    operator fun inc(): BoxInt {
+//        return BoxInt(value + 1)
+//    }
+//
+//    override fun compareTo(other: Int): Int {
+//        return value.compareTo(other)
+//    }
+//}
+//
+//fun main() {
+//    var boxInt = BoxInt(5)
+//    val newValue = boxInt.value * 200
+//    println(newValue)
+//    boxInt++
+//    println(boxInt)
+//
+//    println(State.Start)
+//}
+
+//inline class State(val ordinal:Int) {
+//    companion object {
+//        val Start = State(0)
+//        val Running = State(1)
+//        val Finished = State(2)
+//    }
+//    fun values() = arrayOf(Start, Finished)
+//    val name: String
+//        get() {
+//            return when (ordinal) {
+//                0 -> {
+//                    "Start"
+//                }
+//                1 -> {
+//                    "Running"
+//                }
+//                2 -> {
+//                    "Finished"
+//                }
+//                else -> {
+//                    "other"
+//                }
+//            }
+//        }
+//}
+//
+//fun main() {
+//    setState(State.Running)
+//}
+//
+//fun setState(state:State) {
+//    println("setState-State:$state")
+//}
+
+
+//endregion
+
+//region + 数据类Json序列化
+//fun main() {
+//    val jsonStr = """{"name":"Lee","age":20}"""
+//    val person = Person("Lee", 18)
+//
+//
+//    //Gson
+//    println("Gson")
+//    val gson = Gson()
+//    println(gson.toJson(person))
+//    println(gson.fromJson(jsonStr, Person::class.java))
+//    println()
+//
+//
+//    //Moshi
+//    println("Moshi")
+//    val moshi = Moshi.Builder()
+//            .add(KotlinJsonAdapterFactory())
+//            .build()
+//    val jsonAdapter = moshi.adapter(Person::class.java)
+//    println(jsonAdapter.toJson(person))
+//    println(jsonAdapter.fromJson(jsonStr))
+//    println()
+//
+//
+//    println("Kotlinx.serialization")
+//
+//    val data = PersonFroSerialize("Lee", 18)
+//    println(Json.encodeToString(PersonFroSerialize.serializer(),data))
+//    println(Json.decodeFromString(PersonFroSerialize.serializer(),jsonStr))
+//}
+//
+//
+//data class Person(val name: String, val age: Int)
+//
+//@Serializable
+//data class PersonFroSerialize(val name: String, val age: Int)
+
+//endregion
+
+//region + 带默认参数的序列化
+//fun main() {
+//    val jsonStr = """{"name":"Lee","age":18}"""
+//    val person = PersonWithInits("Lee", 18)
+
+
+    //Gson
+//    println("Gson")
+//    val gson = Gson()
+//    println(gson.toJson(PersonWithInits("Lee", 18)))
+//    val person = gson.fromJson(jsonStr, PersonWithInits::class.java)
+//    println(person)
+//    println(person.firstName)
+
+
+    //Moshi
+//    val moshi = Moshi.Builder()
+//            .add(KotlinJsonAdapterFactory())
+//            .build()
+//    val jsonAdapter = moshi.adapter(PersonWithDefaults::class.java)
+//    println(jsonAdapter.toJson(person))
+//    println(jsonAdapter.fromJson(jsonStr))
+//    println()
+//
+//
+//    println("Kotlinx.serialization")
+//
+//    val data = PersonWithDefaults("Lee")
+//    println(Json.encodeToString(PersonWithDefaults.serializer(),PersonWithDefaults("Lee")))
+//    println(Json.decodeFromString(PersonWithDefaults.serializer(),jsonStr))
+//
+//    println(Json.encodeToJsonElement(PersonWithDefaults("Lee")))
+//}
+
+//@JsonClass(generateAdapter = true)
+//@Serializable
+//data class PersonWithDefaults(val name: String, val age: Int = 18)
+//
+//@Serializable
+//data class PersonFroSerialize(val name: String, val age: Int)
+
+//@DataClassAnnotation
+//data class PersonWithInits(val name: String, val age:Int) {
+//    init {
+//        println("PersonWithInits#init()")
+//    }
+//    val firstName by lazy {
+//        name.split(" ")[0]
+//    }
+//}
+
+
+
+
+//endregion
+
+//region + 带init块的序列化
+//fun main() {
+//    val jsonStr = """{"name":"Lee", "age":18}"""
+//
+//    println(Json.encodeToString(PersonWithInits.serializer(), PersonWithInits("Lee", 18)))
+//    val person = Json.decodeFromString(PersonWithInits.serializer(), jsonStr)
+//    println(person)
+//    println(person.firstName)
+////
+////    //方法一
+////    val moshi = Moshi.Builder()
+//////            .add(KotlinJsonAdapterFactory())
+////            .build()
+////    val jsonAdapter = moshi.adapter(PersonWithInitsAnnotation::class.java)
+////    println(jsonAdapter.toJson(PersonWithInitsAnnotation("Lee", 18)))
+////    val person = jsonAdapter.fromJson(jsonStr)
+////    println(person)
+////    println(person?.firstName)
+////    //方法二
+////    val moshi2 = Moshi.Builder()
+////            .add(KotlinJsonAdapterFactory())
+////            .build()
+////    val jsonAdapter2 = moshi2.adapter(PersonWithInits::class.java)
+////    println(jsonAdapter2.toJson(PersonWithInits("Lee", 18)))
+////
+////    val person2 = jsonAdapter2.fromJson(jsonStr)
+////    println(person2)
+////    println(person2?.firstName)
+//
+//}
+//
+//@JsonClass(generateAdapter = true)
+//data class PersonWithInitsAnnotation(val name: String, val age:Int) {
+//    init {
+//        println("PersonWithInits#init()")
+//    }
+//    val firstName by lazy {
+//        name.split(" ")[0]
+//    }
+//}
+//@Serializable
+//data class PersonWithInits(val name: String, val age:Int) {
+//    init {
+//        println("PersonWithInits#init()")
+//    }
+//    val firstName by lazy {
+//        name.split(" ")[0]
+//    }
+//}
+//
+
+//endregion
+//endregion
+
+//region + 递归整型列表
+
+fun main() {
+    //[0,1,2,3]
+    //实现方式一
+//    val list = IntList.Cons(0, IntList.Cons(1, IntList.Cons(2, IntList.Cons(3, IntList.Nil))))
+    val list = intListOf(0,1,2,3)
+    println(list)
+    println(list.joinToString('-'))
+    println(list.sum())
+
+    val (first, second, third) = list
+    println("$first, $second, $third")
+}
+
+//实现嵌套列表
+fun intListOf(vararg ints: Int): IntList {
+    return when(ints.size) {
+        0 -> IntList.Nil
+        else -> {
+            IntList.Cons(
+                    ints[0],
+                    intListOf(*(ints.slice(1 until ints.size).toIntArray()))
+            )
+        }
+    }
+}
+
+//扩展方法--求和
+fun IntList.sum(): Int {
+    return when (this) {
+        IntList.Nil -> 0
+        is IntList.Cons -> {
+            return head + tail.sum()
+        }
+    }
+}
+
+operator fun IntList.component1(): Int? {
+    return when(this) {
+        IntList.Nil -> null
+        is IntList.Cons -> {
+            head
+        }
+    }
+}
+operator fun IntList.component2(): Int? {
+    return when(this) {
+        IntList.Nil -> null
+        is IntList.Cons -> {
+            tail.component1()
+        }
+    }
+}
+
+operator fun IntList.component3(): Int? {
+    return when(this) {
+        IntList.Nil -> null
+        is IntList.Cons -> {
+            tail.component2()
+        }
+    }
+}
+sealed class IntList {
+    //链的最后一个
+    object  Nil: IntList() {
+        override fun toString(): String {
+            return "Nil"
+        }
+    }
+    data class Cons(val head: Int, val tail:IntList): IntList() {
+        override fun toString(): String {
+            return "$head, $tail"
+        }
+    }
+
+    fun joinToString(sep: Char = ','):String {
+        return when(this) {
+            Nil -> {
+                "Nil"
+            }
+            is Cons -> {
+                "${head}$sep${tail.joinToString(sep)}"
+            }
+        }
+    }
+}
+
+//endregion     了
