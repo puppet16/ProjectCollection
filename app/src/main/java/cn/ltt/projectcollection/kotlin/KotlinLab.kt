@@ -1,6 +1,9 @@
 package cn.ltt.projectcollection.kotlin
 
-import kotlin.reflect.jvm.internal.impl.descriptors.annotations.KotlinRetention
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty
 
 /**
  * ============================================================
@@ -949,91 +952,219 @@ import kotlin.reflect.jvm.internal.impl.descriptors.annotations.KotlinRetention
 //endregion
 
 //region + 递归整型列表
-
-fun main() {
-    //[0,1,2,3]
-    //实现方式一
-//    val list = IntList.Cons(0, IntList.Cons(1, IntList.Cons(2, IntList.Cons(3, IntList.Nil))))
-    val list = intListOf(0,1,2,3)
-    println(list)
-    println(list.joinToString('-'))
-    println(list.sum())
-
-    val (first, second, third) = list
-    println("$first, $second, $third")
-}
-
-//实现嵌套列表
-fun intListOf(vararg ints: Int): IntList {
-    return when(ints.size) {
-        0 -> IntList.Nil
-        else -> {
-            IntList.Cons(
-                    ints[0],
-                    intListOf(*(ints.slice(1 until ints.size).toIntArray()))
-            )
-        }
-    }
-}
-
-//扩展方法--求和
-fun IntList.sum(): Int {
-    return when (this) {
-        IntList.Nil -> 0
-        is IntList.Cons -> {
-            return head + tail.sum()
-        }
-    }
-}
-
-operator fun IntList.component1(): Int? {
-    return when(this) {
-        IntList.Nil -> null
-        is IntList.Cons -> {
-            head
-        }
-    }
-}
-operator fun IntList.component2(): Int? {
-    return when(this) {
-        IntList.Nil -> null
-        is IntList.Cons -> {
-            tail.component1()
-        }
-    }
-}
-
-operator fun IntList.component3(): Int? {
-    return when(this) {
-        IntList.Nil -> null
-        is IntList.Cons -> {
-            tail.component2()
-        }
-    }
-}
-sealed class IntList {
-    //链的最后一个
-    object  Nil: IntList() {
-        override fun toString(): String {
-            return "Nil"
-        }
-    }
-    data class Cons(val head: Int, val tail:IntList): IntList() {
-        override fun toString(): String {
-            return "$head, $tail"
-        }
-    }
-
-    fun joinToString(sep: Char = ','):String {
-        return when(this) {
-            Nil -> {
-                "Nil"
-            }
-            is Cons -> {
-                "${head}$sep${tail.joinToString(sep)}"
-            }
-        }
-    }
-}
+//
+//fun main() {
+//    //[0,1,2,3]
+//    //实现方式一
+////    val list = IntList.Cons(0, IntList.Cons(1, IntList.Cons(2, IntList.Cons(3, IntList.Nil))))
+//    val list = intListOf(0,1,2,3)
+//    println(list)
+//    println(list.joinToString('-'))
+//    println(list.sum())
+//
+//    val (first, second, third) = list
+//    println("$first, $second, $third")
+//}
+//
+////实现嵌套列表
+//fun intListOf(vararg ints: Int): IntList {
+//    return when(ints.size) {
+//        0 -> IntList.Nil
+//        else -> {
+//            IntList.Cons(
+//                    ints[0],
+//                    intListOf(*(ints.slice(1 until ints.size).toIntArray()))
+//            )
+//        }
+//    }
+//}
+//
+////扩展方法--求和
+//fun IntList.sum(): Int {
+//    return when (this) {
+//        IntList.Nil -> 0
+//        is IntList.Cons -> {
+//            return head + tail.sum()
+//        }
+//    }
+//}
+//
+//operator fun IntList.component1(): Int? {
+//    return when(this) {
+//        IntList.Nil -> null
+//        is IntList.Cons -> {
+//            head
+//        }
+//    }
+//}
+//operator fun IntList.component2(): Int? {
+//    return when(this) {
+//        IntList.Nil -> null
+//        is IntList.Cons -> {
+//            tail.component1()
+//        }
+//    }
+//}
+//
+//operator fun IntList.component3(): Int? {
+//    return when(this) {
+//        IntList.Nil -> null
+//        is IntList.Cons -> {
+//            tail.component2()
+//        }
+//    }
+//}
+//sealed class IntList {
+//    //链的最后一个
+//    object  Nil: IntList() {
+//        override fun toString(): String {
+//            return "Nil"
+//        }
+//    }
+//    data class Cons(val head: Int, val tail:IntList): IntList() {
+//        override fun toString(): String {
+//            return "$head, $tail"
+//        }
+//    }
+//
+//    fun joinToString(sep: Char = ','):String {
+//        return when(this) {
+//            Nil -> {
+//                "Nil"
+//            }
+//            is Cons -> {
+//                "${head}$sep${tail.joinToString(sep)}"
+//            }
+//        }
+//    }
+//}
 
 //endregion     了
+
+//region + 通过代理实现model注入方式一
+
+//abstract class AbsModel {
+//    init {
+//        Models.run { register() }
+//    }
+//}
+//
+//class DatabaseModel: AbsModel() {
+//    fun query(sql: String): Int = 0
+//}
+//
+//class NetworkModel: AbsModel() {
+//    fun get(url:String) = """{"code":0}"""
+//}
+//
+//object Models {
+//    private val modelMap = ConcurrentHashMap<Class<out AbsModel>, AbsModel>()
+//
+//    fun <T: AbsModel> KClass<T>.get(): T {
+//        return modelMap[this.java] as T
+//    }
+//
+//    fun AbsModel.register() {
+//        modelMap[this.javaClass] = this
+//    }
+//}
+//
+//inline fun <reified T: AbsModel> modelOf(): ModelDelegate<T> {
+//    return ModelDelegate(T::class)
+//}
+//
+//class ModelDelegate<T: AbsModel>(val kClass:KClass<T>): ReadOnlyProperty<Any, T> {
+//    override fun getValue(thisRef: Any, property: KProperty<*>): T {
+//        return Models.run { kClass.get() }
+//    }
+//}
+//
+//
+//class MainViewModel{
+//    val databaseModel by modelOf<DatabaseModel>()
+//    val networkModel by modelOf<NetworkModel>()
+//}
+//
+//fun initModels() {
+//    DatabaseModel()
+//    NetworkModel()
+//}
+//
+//fun main() {
+//    initModels()
+//    val mainViewModel = MainViewModel()
+//    mainViewModel.databaseModel.query("select * from mysql.user").let(::println)
+//    mainViewModel.networkModel.get("https://www.imooc.com").let(::println)
+//}
+//endregion
+
+
+//region + 通过代理实现model注入方式一
+
+abstract class AbsModel {
+    init {
+        Models.run { register() }
+    }
+}
+
+class DatabaseModel: AbsModel() {
+    fun query(sql: String): Int = 0
+}
+
+class NetworkModel: AbsModel() {
+    fun get(url:String) = """{"code":0}"""
+}
+
+class PageModel: AbsModel() {
+    init {
+        Models.run { register("PageModel2") }
+    }
+
+    fun enter() {
+        println("enter Next Page")
+    }
+}
+
+object Models {
+    private val modelMap = ConcurrentHashMap<String, AbsModel>()
+
+    fun <T: AbsModel> String.get(): T {
+        return modelMap[this] as T
+    }
+
+    fun AbsModel.register(name: String = this.javaClass.simpleName) {
+        modelMap[name] = this
+
+        println(modelMap.values.joinToString())
+    }
+}
+
+object ModelDelegate{
+    operator fun <T: AbsModel> getValue(thisRef: Any, property: KProperty<*>): T {
+        return Models.run { property.name.capitalize().get() }
+    }
+}
+
+
+class MainViewModel{
+    val databaseModel: DatabaseModel by ModelDelegate
+    val networkModel: NetworkModel by ModelDelegate
+    val pageModel: PageModel by ModelDelegate
+    val pageModel2: PageModel by ModelDelegate
+}
+
+fun initModels() {
+    DatabaseModel()
+    NetworkModel()
+    PageModel()
+}
+
+fun main() {
+    initModels()
+    val mainViewModel = MainViewModel()
+    mainViewModel.databaseModel.query("select * from mysql.user").let(::println)
+    mainViewModel.networkModel.get("https://www.imooc.com").let(::println)
+    mainViewModel.pageModel.enter()
+    mainViewModel.pageModel2.enter()
+}
+//endregion
