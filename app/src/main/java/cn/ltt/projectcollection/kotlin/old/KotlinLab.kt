@@ -1,9 +1,6 @@
-package cn.ltt.projectcollection.kotlin
+package cn.ltt.projectcollection.kotlin.old
 
-import java.util.concurrent.ConcurrentHashMap
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KClass
-import kotlin.reflect.KProperty
+import kotlin.reflect.jvm.internal.impl.descriptors.annotations.KotlinRetention
 
 /**
  * ============================================================
@@ -847,7 +844,7 @@ import kotlin.reflect.KProperty
 //    val person = PersonWithInits("Lee", 18)
 
 
-    //Gson
+//Gson
 //    println("Gson")
 //    val gson = Gson()
 //    println(gson.toJson(PersonWithInits("Lee", 18)))
@@ -856,7 +853,7 @@ import kotlin.reflect.KProperty
 //    println(person.firstName)
 
 
-    //Moshi
+//Moshi
 //    val moshi = Moshi.Builder()
 //            .add(KotlinJsonAdapterFactory())
 //            .build()
@@ -1039,132 +1036,4 @@ import kotlin.reflect.KProperty
 //    }
 //}
 
-//endregion     了
-
-//region + 通过代理实现model注入方式一
-
-//abstract class AbsModel {
-//    init {
-//        Models.run { register() }
-//    }
-//}
-//
-//class DatabaseModel: AbsModel() {
-//    fun query(sql: String): Int = 0
-//}
-//
-//class NetworkModel: AbsModel() {
-//    fun get(url:String) = """{"code":0}"""
-//}
-//
-//object Models {
-//    private val modelMap = ConcurrentHashMap<Class<out AbsModel>, AbsModel>()
-//
-//    fun <T: AbsModel> KClass<T>.get(): T {
-//        return modelMap[this.java] as T
-//    }
-//
-//    fun AbsModel.register() {
-//        modelMap[this.javaClass] = this
-//    }
-//}
-//
-//inline fun <reified T: AbsModel> modelOf(): ModelDelegate<T> {
-//    return ModelDelegate(T::class)
-//}
-//
-//class ModelDelegate<T: AbsModel>(val kClass:KClass<T>): ReadOnlyProperty<Any, T> {
-//    override fun getValue(thisRef: Any, property: KProperty<*>): T {
-//        return Models.run { kClass.get() }
-//    }
-//}
-//
-//
-//class MainViewModel{
-//    val databaseModel by modelOf<DatabaseModel>()
-//    val networkModel by modelOf<NetworkModel>()
-//}
-//
-//fun initModels() {
-//    DatabaseModel()
-//    NetworkModel()
-//}
-//
-//fun main() {
-//    initModels()
-//    val mainViewModel = MainViewModel()
-//    mainViewModel.databaseModel.query("select * from mysql.user").let(::println)
-//    mainViewModel.networkModel.get("https://www.imooc.com").let(::println)
-//}
-//endregion
-
-
-//region + 通过代理实现model注入方式一
-
-abstract class AbsModel {
-    init {
-        Models.run { register() }
-    }
-}
-
-class DatabaseModel: AbsModel() {
-    fun query(sql: String): Int = 0
-}
-
-class NetworkModel: AbsModel() {
-    fun get(url:String) = """{"code":0}"""
-}
-
-class PageModel: AbsModel() {
-    init {
-        Models.run { register("PageModel2") }
-    }
-
-    fun enter() {
-        println("enter Next Page")
-    }
-}
-
-object Models {
-    private val modelMap = ConcurrentHashMap<String, AbsModel>()
-
-    fun <T: AbsModel> String.get(): T {
-        return modelMap[this] as T
-    }
-
-    fun AbsModel.register(name: String = this.javaClass.simpleName) {
-        modelMap[name] = this
-
-        println(modelMap.values.joinToString())
-    }
-}
-
-object ModelDelegate{
-    operator fun <T: AbsModel> getValue(thisRef: Any, property: KProperty<*>): T {
-        return Models.run { property.name.capitalize().get() }
-    }
-}
-
-
-class MainViewModel{
-    val databaseModel: DatabaseModel by ModelDelegate
-    val networkModel: NetworkModel by ModelDelegate
-    val pageModel: PageModel by ModelDelegate
-    val pageModel2: PageModel by ModelDelegate
-}
-
-fun initModels() {
-    DatabaseModel()
-    NetworkModel()
-    PageModel()
-}
-
-fun main() {
-    initModels()
-    val mainViewModel = MainViewModel()
-    mainViewModel.databaseModel.query("select * from mysql.user").let(::println)
-    mainViewModel.networkModel.get("https://www.imooc.com").let(::println)
-    mainViewModel.pageModel.enter()
-    mainViewModel.pageModel2.enter()
-}
 //endregion
