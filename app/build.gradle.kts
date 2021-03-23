@@ -64,7 +64,7 @@ dependencies {
     implementation ("com.jakewharton:butterknife:10.2.3")
     annotationProcessor( "com.jakewharton:butterknife-compiler:10.2.3")
     implementation( "androidx.core:core-ktx:+")
-    implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
+    implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
 
@@ -76,7 +76,8 @@ dependencies {
     kapt( "com.squareup.moshi:moshi-kotlin-codegen:1.11.0") // for generated Json Adapter
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
-//    implementation( "org.jetbrains.kotlin:kotlin-reflect")
+    implementation( "org.jetbrains.kotlin:kotlin-reflect")
+    implementation(project( ":plugin_common"))
 
 }
 repositories {
