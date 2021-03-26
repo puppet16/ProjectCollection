@@ -51,13 +51,15 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation( "androidx.constraintlayout:constraintlayout:2.0.2")
-    testImplementation( "junit:junit:4.12")
+    implementation( "androidx.constraintlayout:constraintlayout:2.0.4")
+    testImplementation( "junit:junit:4.13.2")
     androidTestImplementation( "androidx.test.ext:junit:1.1.2")
     androidTestImplementation( "androidx.test.espresso:espresso-core:3.3.0")
 
     //Gson
     implementation ("com.google.code.gson:gson:2.8.6")
+    //okhttp3
+    implementation("com.squareup.okhttp3:okhttp:4.8.1")
     //EventBus
     implementation ("org.greenrobot:eventbus:3.1.1")
 
@@ -68,8 +70,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
 
-
-    implementation("com.google.code.gson:gson:2.8.1")
 
     implementation("com.squareup.moshi:moshi:1.11.0")
     implementation( "com.squareup.moshi:moshi-kotlin:1.11.0") // for KotlinJsonAdapterFactory

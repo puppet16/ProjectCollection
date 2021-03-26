@@ -24,3 +24,9 @@
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/runConfigurations.xml
 /.idea/vcs.xml
+/plugin_common/build/
+/plugin_1/build/
+/plugin_2/build/
+/.idea/compiler.xml
+/.idea/kotlinScripting.xml
+/app/release/
