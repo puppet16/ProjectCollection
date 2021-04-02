@@ -16,7 +16,7 @@ import butterknife.Unbinder;
  * desc    描述
  * ============================================================
  **/
-abstract class BaseActivity : AppCompatActivity() {
+public abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var mActivity: BaseActivity
     @JvmField
     val TAG : String =this::class.java.simpleName
