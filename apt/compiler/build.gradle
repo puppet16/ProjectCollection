@@ -19,7 +19,7 @@ dependencies {
     implementation "com.bennyhuo.aptutils:aptutils:1.7.1"
     implementation project(":apt:annotations")
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 compileKotlin {
