@@ -30,3 +30,5 @@
 /.idea/compiler.xml
 /.idea/kotlinScripting.xml
 /app/release/
+/apt/annotations/build/
+/apt/compiler/build/

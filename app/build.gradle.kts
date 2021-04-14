@@ -9,6 +9,8 @@ plugins {
 
 //    kotlin("jvm") version "1.4.30" // or kotlin("multiplatform") or any other kotlin plugin
     kotlin("plugin.serialization") version "1.4.30"
+    id ("kotlin-android-extensions")
+
 }
 
 noArg {
@@ -45,6 +47,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        kotlinOptions.jvmTarget  = "1.8"
     }
 }
 
@@ -77,8 +80,15 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation( "org.jetbrains.kotlin:kotlin-reflect")
+    //插件化示例代码
     implementation(project( ":plugin_common"))
 
+    //注解处理器示例
+    kapt (project(":apt:compiler"))
+    implementation (project(":apt:annotations"))
+    implementation ("com.squareup:kotlinpoet:1.4.3")
+    implementation ("com.bennyhuo.aptutils:aptutils:1.7.1")
+    implementation (project(":apt:annotations"))
 }
 repositories {
     mavenCentral()

@@ -5,4 +5,3 @@ include(":app")
 rootProject.name = "ProjectCollection"
 include(":apt:annotations")
 include(":apt:compiler")
-include(":apt:sample")
