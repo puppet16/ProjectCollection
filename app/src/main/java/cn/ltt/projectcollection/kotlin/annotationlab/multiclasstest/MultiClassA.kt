@@ -10,9 +10,9 @@ package cn.ltt.projectcollection.kotlin.annotationlab.multiclasstest
  * ============================================================
  **/
 
-
-fun getDeviceId() : String = "deviceId"
-
-lateinit var id: String
-
-const val DEVICE_ID_DEFAULT = "123"
+//
+//fun getDeviceId() : String = "deviceId"
+//
+//lateinit var id: String
+//
+//const val DEVICE_ID_DEFAULT = "123"

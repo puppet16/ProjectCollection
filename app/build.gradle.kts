@@ -54,19 +54,19 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation( "androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     testImplementation( "junit:junit:4.13.2")
-    androidTestImplementation( "androidx.test.ext:junit:1.1.2")
-    androidTestImplementation( "androidx.test.espresso:espresso-core:3.3.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.2")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 
     //Gson
-    implementation ("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.8.6")
     //okhttp3
     implementation("com.squareup.okhttp3:okhttp:4.8.1")
     //EventBus
-    implementation ("org.greenrobot:eventbus:3.1.1")
+    implementation("org.greenrobot:eventbus:3.1.1")
 
-    implementation ("com.jakewharton:butterknife:10.2.3")
+    implementation("com.jakewharton:butterknife:10.2.3")
     annotationProcessor( "com.jakewharton:butterknife-compiler:10.2.3")
     implementation( "androidx.core:core-ktx:+")
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
@@ -85,10 +85,15 @@ dependencies {
 
     //注解处理器示例
     kapt (project(":apt:compiler"))
-    implementation (project(":apt:annotations"))
-    implementation ("com.squareup:kotlinpoet:1.4.3")
-    implementation ("com.bennyhuo.aptutils:aptutils:1.7.1")
-    implementation (project(":apt:annotations"))
+    implementation(project(":apt:annotations"))
+    implementation("com.squareup:kotlinpoet:1.4.3")
+    implementation("com.bennyhuo.aptutils:aptutils:1.7.1")
+    implementation(project(":apt:annotations"))
+    //协程
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+
+    implementation("com.bennyhuo.java:portable-android-handler:0.2")
+
 }
 repositories {
     mavenCentral()

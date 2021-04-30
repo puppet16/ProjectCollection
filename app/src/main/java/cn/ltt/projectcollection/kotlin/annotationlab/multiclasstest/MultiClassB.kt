@@ -9,10 +9,10 @@ package cn.ltt.projectcollection.kotlin.annotationlab.multiclasstest
  * desc    测试注解JvmMultifileClass
  * ============================================================
  **/
-
-
-fun getDeviceWidth() : Int = width
-
-var width: Int = 333
-
-const val DEVICE_WIDTH_DEFAULT = 233
+//
+//
+//fun getDeviceWidth() : Int = width
+//
+//var width: Int = 333
+//
+//const val DEVICE_WIDTH_DEFAULT = 233
