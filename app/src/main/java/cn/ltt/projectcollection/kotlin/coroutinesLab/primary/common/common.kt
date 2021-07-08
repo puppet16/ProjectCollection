@@ -1,4 +1,4 @@
-package cn.ltt.projectcollection.kotlin.coroutinesLab.common
+package cn.ltt.projectcollection.kotlin.coroutinesLab.primary.common
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

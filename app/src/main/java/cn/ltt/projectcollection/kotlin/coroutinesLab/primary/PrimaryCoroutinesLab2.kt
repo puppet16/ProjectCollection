@@ -1,13 +1,11 @@
-package cn.ltt.projectcollection.kotlin.coroutinesLab
+package cn.ltt.projectcollection.kotlin.coroutinesLab.primary
 
-import android.os.utils.Logger
 import android.util.Log
-import cn.ltt.projectcollection.kotlin.coroutinesLab.common.User
-import cn.ltt.projectcollection.kotlin.coroutinesLab.common.githubApi
-import cn.ltt.projectcollection.kotlin.coroutinesLab.common.showUser
-import cn.ltt.projectcollection.kotlin.coroutinesLab.dispatcher.DispatcherContext
-import cn.ltt.projectcollection.kotlin.coroutinesLab.dispatcher.HandlerDispatcher
-import kotlinx.coroutines.delay
+import cn.ltt.projectcollection.kotlin.coroutinesLab.primary.common.User
+import cn.ltt.projectcollection.kotlin.coroutinesLab.primary.common.githubApi
+import cn.ltt.projectcollection.kotlin.coroutinesLab.primary.common.showUser
+import cn.ltt.projectcollection.kotlin.coroutinesLab.primary.dispatcher.DispatcherContext
+import cn.ltt.projectcollection.kotlin.coroutinesLab.primary.dispatcher.HandlerDispatcher
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException

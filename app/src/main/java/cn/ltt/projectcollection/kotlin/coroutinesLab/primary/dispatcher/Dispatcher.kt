@@ -1,4 +1,4 @@
-package cn.ltt.projectcollection.kotlin.coroutinesLab.dispatcher;
+package cn.ltt.projectcollection.kotlin.coroutinesLab.primary.dispatcher;
 
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.Continuation

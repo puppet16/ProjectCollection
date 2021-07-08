@@ -1,4 +1,4 @@
-package cn.ltt.projectcollection.kotlin.coroutinesLab
+package cn.ltt.projectcollection.kotlin.coroutinesLab.primary
 
 import android.util.Log
 import cn.ltt.projectcollection.utils.LogUtils

@@ -1,4 +1,4 @@
-package cn.ltt.projectcollection.kotlin.coroutinesLab.dispatcher;
+package cn.ltt.projectcollection.kotlin.coroutinesLab.primary.dispatcher;
 
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
