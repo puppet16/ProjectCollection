@@ -11,15 +11,12 @@ import cn.ltt.projectcollection.base.BaseActivity;
  * desc    描述
  * ============================================================
  **/
-public class BezierCurveActivity extends BaseActivity {
+class BezierCurveActivity: BaseActivity() {
 
-    @Override
-    protected void initPage() {
+    override fun initPage() {
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_bezier_curve;
-    }
+    override fun getLayoutId() = R.layout.activity_bezier_curve;
+
 }

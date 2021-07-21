@@ -11,15 +11,12 @@ import cn.ltt.projectcollection.base.BaseActivity;
  * desc    描述
  * ============================================================
  **/
-public class DragBubbleActivity extends BaseActivity {
+class DragBubbleActivity: BaseActivity() {
 
-    @Override
-    protected void initPage() {
+    override fun initPage() {
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_drag_bubble;
-    }
+    override fun getLayoutId() = R.layout.activity_drag_bubble
+
 }

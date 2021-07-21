@@ -11,15 +11,12 @@ import cn.ltt.projectcollection.base.BaseActivity;
  * desc    描述
  * ============================================================
  **/
-public class PictureLoadingActivity extends BaseActivity {
+class PictureLoadingActivity: BaseActivity() {
 
-    @Override
-    protected void initPage() {
+    override fun initPage() {
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_pic_loading;
-    }
+    override fun getLayoutId() = R.layout.activity_pic_loading
+
 }

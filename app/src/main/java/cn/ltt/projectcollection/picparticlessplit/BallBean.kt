@@ -1,4 +1,4 @@
-package cn.ltt.projectcollection.picparticlessplit;
+package cn.ltt.projectcollection.picparticlessplit
 
 /**
  * ============================================================
@@ -7,20 +7,23 @@ package cn.ltt.projectcollection.picparticlessplit;
  * date    2020/10/10
  * desc    粒子数据
  * ============================================================
- **/
-public class BallBean {
+ */
+class BallBean {
     //颜色
-    public int color;
-    //圆心
-    public float x;
-    public float y;
-    //半径
-    public float r;
-    //速度
-    public float vX;
-    public float vY;
-    //加速度
-    public float aX;
-    public float aY;
+    var color = 0
 
+    //圆心
+    var x = 0f
+    var y = 0f
+
+    //半径
+    var r = 0f
+
+    //速度
+    var vX = 0f
+    var vY = 0f
+
+    //加速度
+    var aX = 0f
+    var aY = 0f
 }

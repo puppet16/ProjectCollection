@@ -1,13 +1,6 @@
 package cn.ltt.projectcollection.kotlin
 
-import android.animation.ObjectAnimator
-import android.os.Build
-import android.os.Bundle
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationBuilderWithBuilderAccessor
-import cn.ltt.projectcollection.utils.ApplicationUtils
 import com.google.gson.Gson
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KProperty
