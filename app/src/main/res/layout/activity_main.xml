@@ -36,5 +36,9 @@
             android:id="@+id/btnEnterKotlin"
             style="@style/ButtonStyle"
             android:text="@string/main_enter_kotlin" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNetRetry"
+            style="@style/ButtonStyle"
+            android:text="网络错误重试" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

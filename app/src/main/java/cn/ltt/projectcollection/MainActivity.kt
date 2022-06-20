@@ -27,6 +27,7 @@ class MainActivity: BaseActivity(), View.OnClickListener {
             put(btnPicParticlesSplit.apply { setOnClickListener(activity)}, PicParticlesSplitActivity::class.java)
             put(btnBezierCurve.apply { setOnClickListener(activity)}, BezierCurveActivity::class.java)
             put(btnDragBubble.apply { setOnClickListener(activity)}, DragBubbleActivity::class.java)
+            put(btnNetRetry.apply { setOnClickListener(activity)}, DragBubbleActivity::class.java)
         }
     }
 
